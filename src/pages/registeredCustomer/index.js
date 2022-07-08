@@ -44,6 +44,7 @@ id: 1
                                       let newData = [...res["data"]]
                                       console.log("from index",newData)
                                    setData(res.data[0])
+                                  //  c
                                    
                                   })                               
                                   .catch((err)=>console.log(err))
