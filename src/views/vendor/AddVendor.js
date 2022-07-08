@@ -32,10 +32,11 @@ const useStyles = makeStyles(theme => ({
     textTransform: 'none'
   },
   inputFieldContainer:{
-    display:'flex',fontWeight:'500',color:'#5a8ff2',alignItems:'center',justifyContent:'space-between',marginBottom:'10px',marginLeft:'40px',marginRight:'40px'
+    display:'flex',fontWeight:'500',alignItems:'center',justifyContent:'space-between',marginBottom:'10px',marginLeft:'40px',marginRight:'40px'
   },      
   inputFieldName:{
     fontWeight:'500',
+    color:'#00477e',
     fontSize:'18px',
   [theme.breakpoints.down("sm")]:{
     fontWeight:'500',

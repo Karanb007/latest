@@ -1,112 +1,82 @@
-import {useState,useEffect} from 'react';
-import axios from 'axios';
-import Link from 'next/link'
+import { useState, useEffect } from "react";
+import axios from "axios";
+import Link from "next/link";
+import Image from "next/image";
 // ** MUI Imports
-import Card from '@mui/material/Card'
-import Paper from '@mui/material/Paper'
-import Table from '@mui/material/Table'
-import TableRow from '@mui/material/TableRow'
-import TableHead from '@mui/material/TableHead'
-import TableBody from '@mui/material/TableBody'
-import TableCell from '@mui/material/TableCell'
-import TableContainer from '@mui/material/TableContainer'
-import { makeStyles } from "@material-ui/core/styles"
-import Button from '@mui/material/Button'
+import Card from "@mui/material/Card";
+import Paper from "@mui/material/Paper";
+import Table from "@mui/material/Table";
+import TableRow from "@mui/material/TableRow";
+import TableHead from "@mui/material/TableHead";
+import TableBody from "@mui/material/TableBody";
+import TableCell from "@mui/material/TableCell";
+import TableContainer from "@mui/material/TableContainer";
+import { makeStyles } from "@material-ui/core/styles";
+import Button from "@mui/material/Button";
 //icon
-import AccountEdit from 'mdi-material-ui/AccountEdit'
+import AccountEdit from "mdi-material-ui/AccountEdit";
 
 const useStyles = makeStyles((theme) => ({
-  table:{
-    maxHeight:'70vh'
+  table: {
+    maxHeight: "70vh",
   },
-  card:{
-   
-  border:'1px solid #7fab07',borderStyle:'dashed',paddingTop:'30px',paddingBottom:'10px',
- 
+  card: {
+    border: "1px solid #7fab07",
+    borderStyle: "dashed",
+    paddingTop: "30px",
+    paddingBottom: "10px",
   },
-  btns:{
-    display:'flex'
-  }
-}))
+  btns: {
+    display: "flex",
+  },
+}));
 
-const ListTable = ({tableData})=>{
-    const classes = useStyles()
-    let headings = []
-    let data = []
-   
-    for(let i in tableData[0]){
-        headings.push(i)
-    }
+const ListTable = ({ headings, data, actions,srno,buttons }) => {
+  const classes = useStyles();
+  
+  // let headings = []
+  // let data = []
 
-    
-    
-    
-    return(
-      <Card className={classes.card} >
-        <TableContainer component={Paper} className={classes.table}>
-        <Table sx={{ minWidth:650}} aria-label='simple table'>
+  // for(let i in tableData[0]){
+  //     headings.push(i)
+  //
+console.log("data from listtable:",data)
+  return (
+    <Card className={classes.card}>
+      <TableContainer component={Paper} className={classes.table}>
+        <Table sx={{ minWidth: 650 }} aria-label="simple table">
+          {/* headings */}
           <TableHead>
             <TableRow>
-             
-                <TableCell align='left' >Id</TableCell>
-                <TableCell align='left' >Name</TableCell>
-                <TableCell align='left' >Phone</TableCell>
-                <TableCell align='left' >E-mail</TableCell>
-                <TableCell align='left' >DOB</TableCell>
-                <TableCell align='left' >Address</TableCell>
-            
-              <TableCell align='center'></TableCell>
+              {headings.map((item) => (
+                <TableCell align="left">{item}</TableCell>
+              ))}
+
+              <TableCell align="center"></TableCell>
             </TableRow>
           </TableHead>
+          {/* data */}
           <TableBody>
-          {tableData.map(customer => (
-              <TableRow
-                key={customer.name}
+           
+            
+            {data.map((items, i) => (
+              
+              <TableRow>
+                {srno &&  <TableCell>{i + 1}</TableCell>}
                
-              >
-                <TableCell component='th' scope='row'>
-                  {customer.id}
-                </TableCell>
-                <TableCell align='left'>{customer.name}</TableCell>
-                <TableCell align='left'>{customer.phone}</TableCell>
-                <TableCell align='left'>{customer.email}</TableCell>
-                <TableCell align='left'>{customer.dob}</TableCell>
-                <TableCell align='left'>{customer.address}</TableCell>
-                {/* <TableCell align='left' className={classes.btns}>
-                   <Button>
-                     edit
-                   </Button>
-                   <Button>
-                     delet
-                   </Button>
-                   <Link href={{ pathname: "/workList/vendorProfile/", query: { id: vendor.id } }}><a>profile</a></Link>
-                </TableCell> */}
+                {Object.values(items).map((item) => {
+                  return <TableCell>{item}</TableCell>;
+                })}
+               
+                {buttons && <TableCell>{buttons.map((btn)=>(<button onClick={()=>console.log(btn.path+items.vendorId)}>{btn.name}</button>))}</TableCell>}
+                {/* <TableCell>{actions.map((item)=> item)} </TableCell> */}
+                
               </TableRow>
             ))}
-          {/* {tableData.map((items)=>(
-              <TableRow>
-                
-                {
-                  Object.values(items).map(item => {
-                    return<TableCell>{item}</TableCell>
-                  })
-                
-                }
-                
-               
-                
-              </TableRow>
-               ))}
-            */}
-           
-           
-                
-            
-            
           </TableBody>
         </Table>
       </TableContainer>
-      </Card>
-    )
-}
+    </Card>
+  );
+};
 export default ListTable;

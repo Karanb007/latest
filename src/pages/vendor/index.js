@@ -10,9 +10,9 @@ import Button from '@mui/material/Button'
 import TextField from '@mui/material/TextField'
 import MenuItem from '@mui/material/MenuItem';
 // ** Demo Components Imports
-import AddVendor from 'src/views/workList/AddVendor'
-import SearchVendor from 'src/views/workList/SearchVendor'
-import VendorList from 'src/views/workList/VendorList'
+import AddVendor from 'src/views/vendor/AddVendor'
+import SearchVendor from 'src/views/vendor/SearchVendor'
+import VendorList from 'src/views/vendor/VendorList'
 
 
 
@@ -47,7 +47,7 @@ const workList = () => {
         <Button
               size='small'
               sx={{ marginBottom: 7 }}
-             style={{border:'solid 1px #282828',marginBottom:'0px',color:'#5a8ff2',fontWeight:'600',textTransform:'none',
+             style={{border:'solid 1px #282828',marginBottom:'0px',color:'#00477e',fontWeight:'600',textTransform:'none',
                     background: tabStatus === 'add' ? '#f7ea9c' : 'none'
                    }}
              onClick={()=>setTabStatus("add")}
@@ -56,7 +56,7 @@ const workList = () => {
             </Button>
             <Button
               size='small'
-              style={{border:'solid 1px #282828',color:'#5a8ff2',fontWeight:'600',marginBottom:'0px',textTransform:'none',
+              style={{border:'solid 1px #282828',color:'#00477e',fontWeight:'600',marginBottom:'0px',textTransform:'none',
               background: tabStatus === 'search' ? '#f7ea9c' : 'none'}}
               sx={{ marginBottom: 7 }}
               onClick={()=>setTabStatus("search")}
@@ -65,7 +65,7 @@ const workList = () => {
             </Button>
             <Button
               size='small'
-              style={{border:'solid 1px #282828',color:'#5a8ff2',fontWeight:'600',marginBottom:'0px',textTransform:'none',
+              style={{border:'solid 1px #282828',color:'#00477e',fontWeight:'600',marginBottom:'0px',textTransform:'none',
               background: tabStatus === 'list' ? '#f7ea9c' : 'none'}}
               sx={{ marginBottom: 7 }}
               onClick={()=>setTabStatus("list")}

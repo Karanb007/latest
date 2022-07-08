@@ -49,9 +49,14 @@ const navigation = () => {
       path: '/registerCustomer'
     },
     {
-      title: 'My Work List',
+      title: 'vendor',
       icon: Table,
-      path: '/workList'
+      path: '/vendor'
+    },
+    {
+      title: 'Manage Users',
+      icon: Table,
+      path: '/manageUsers'
     }
     // {
     //   sectionTitle: 'User Interface'

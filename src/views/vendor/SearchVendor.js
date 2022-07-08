@@ -9,7 +9,7 @@ import Button from '@mui/material/Button'
 
 const useStyles = makeStyles((theme) => ({
     card:{
-        height:'60vh',
+        height:'70vh',
       border:'1px solid #7fab07',borderStyle:'dashed',width:'99%',paddingTop:'50px',paddingBottom:'10px',
         [theme.breakpoints.down("sm")]:{
           marginTop:'5px',
@@ -21,11 +21,12 @@ const useStyles = makeStyles((theme) => ({
      }  
       },
       inputFieldContainer:{
-        display:'flex',fontWeight:'500',color:'#5a8ff2',alignItems:'center',justifyContent:'space-between',marginBottom:'10px',marginLeft:'40px',marginRight:'40px'
+        display:'flex',fontWeight:'500',alignItems:'center',justifyContent:'space-between',marginBottom:'10px',marginLeft:'40px',marginRight:'40px'
       },      
       inputFieldName:{
         fontWeight:'500',
         fontSize:'18px',
+        color:'#00477e',
         [theme.breakpoints.down("sm")]:{
           fontWeight:'500',
           fontSize:'13px'  
@@ -49,7 +50,7 @@ const useStyles = makeStyles((theme) => ({
         background : "#9ed406",
         marginTop:'10px',
         fontWeight:600,
-        color:'#5a8ff2',
+        color:'#00477e',
         textTransform:'none',
       },
 }))

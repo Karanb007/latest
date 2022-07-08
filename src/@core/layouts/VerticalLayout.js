@@ -23,6 +23,7 @@ import DatePickerWrapper from 'src/@core/styles/libs/react-datepicker'
 
 const VerticalLayoutWrapper = styled('div')({
   height: '100%',
+ 
   display: 'flex'
 })
 
@@ -31,12 +32,15 @@ const MainContentWrapper = styled(Box)({
   minWidth: 0,
   display: 'flex',
   minHeight: '100vh',
-  flexDirection: 'column'
+  flexDirection: 'column',
+  
+
 })
 
 const ContentWrapper = styled('main')(({ theme }) => ({
   flexGrow: 1,
   width: '100%',
+  
   padding: theme.spacing(6),
   transition: 'padding .25s ease-in-out',
   [theme.breakpoints.down('sm')]: {

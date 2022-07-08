@@ -29,12 +29,12 @@ const useStyles = makeStyles((theme) => ({
      }  
       },
       inputFieldContainer:{
-        display:'flex',fontWeight:'500',color:'#5a8ff2',alignItems:'center',justifyContent:'space-between',marginBottom:'10px',marginLeft:'40px',marginRight:'40px'
+        display:'flex',fontWeight:'500',alignItems:'center',justifyContent:'space-between',marginBottom:'10px',marginLeft:'40px',marginRight:'40px'
       },      
       inputFieldName:{
         fontWeight:'500',
         fontSize:'18px',
-        color:'#5a8ff2',
+        color:'#00477e',
       [theme.breakpoints.down("sm")]:{
         fontWeight:'500',
         fontSize:'15px'  
@@ -90,61 +90,40 @@ const RegisterCustomer = ()=>{
 
     const [customerRegistrationInfo,setCustomerRegistrationInfo] = useState(initialInfo); 
 
-    // const [selectedFile, setSelectedFile] = useState(null);
+    const [selectedFile, setSelectedFile] = useState(null);
 
     const handleChange = (e)=>{
         setCustomerRegistrationInfo({...customerRegistrationInfo,[e.target.name]:e.target.value});
     }
-    // const handleFileSelect = (event) => {
-    //   setSelectedFile(event.target.files[0])
-    // }
-
-    // const handleSubmit =  async(event) => {
-    //   // event.preventDefault()
-    //   // const formData = new FormData();
-    //   // formData.append("selectedFile", selectedFile);
-    //   // console.log(formData)
-      
-    //   try {
-    //     const response = await axios({
-    //       method: "post",
-    //       url: "http://localhost:3006/uploads",
-    //       data: formData,
-    //       headers: { "Content-Type": "multipart/form-data" },
-    //     });
-    //   } catch(error) {
-    //     console.log(error)
-    //   }
-    // }
-
+    const handleUploadFile = async(e)=>{
+        setSelectedFile(e.target.files[0])
+    }
     
-
-    // const handleUploadFile = async(e)=>{
-    //   await axios.post("http://localhost:3006/uploads",e.target.files[0])
-    //                .then((res)=> setMessage({text:"Information has been submitted...",color:"green"})) 
-    //                .catch((err)=>setMessage({text:"Something went wrong",color:"red"}))
-      
-    // }
-
-
+  
     const registerCustomer = async()=>{
-      // const unique_id = uuid();
-      // const small_id = unique_id.slice(0,8)
+      const formData = new FormData()
 
-      // const formData = new FormData()
-      // formData.append('idProof',customerIdProof)
+      formData.append('name',customerRegistrationInfo.name)
+      
+      formData.append('email',customerRegistrationInfo.email)
+      formData.append('phone',customerRegistrationInfo.phone)
+      
+      formData.append('dob',customerRegistrationInfo.dob)
+      
+      formData.append('address',customerRegistrationInfo.address)
+      
+      formData.append('password',customerRegistrationInfo.password)
+      
+      formData.append('file',selectedFile)
       
       
-        await axios.post("http://localhost:3006/customers",customerRegistrationInfo)
-                   .then((res)=> setMessage({text:"Information has been submitted...",color:"green"})) 
-                   .catch((err)=>setMessage({text:"Something went wrong",color:"red"}))
+      
+        await axios.post("http://localhost:5000/api/employee/employee",formData)
+                   .then((res)=> console.log(res)) 
+                   .catch((err)=>console.log(err))
 
-                   setTimeout(()=>{
-                    setMessage({})
-                    setCustomerRegistrationInfo(initialInfo)
-                   },3000)
-    //     console.log(customerIdProof)
-    // console.log(formData)
+                  
+    
     }
 
 return (
