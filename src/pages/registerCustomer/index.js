@@ -78,7 +78,8 @@ const initialInfo = {
       dob:"",
       phone: "",
       address: "",
-      password:""
+      password:"",
+      file:null
       
      
 }
@@ -119,9 +120,17 @@ const RegisterCustomer = ()=>{
       
       
         await axios.post("http://localhost:5000/api/employee/employee",formData)
-                   .then((res)=> console.log(res)) 
-                   .catch((err)=>console.log(err))
+                   .then((res)=> {
+                    setMessage({color:'green',text:'Customer registered successfully.'})
+                  
+                  }) 
+                   .catch((err)=> setMessage({color:'red',text:'Something went wrong.'}))
 
+                  setTimeout(()=>{
+                    setCustomerRegistrationInfo(initialInfo)
+                    setMessage({})
+                    
+                  },3000) 
                   
     
     }
@@ -230,7 +239,9 @@ return (
              <div className={classes.inputFieldName}>Customer ID</div>
              <TextField
                  className={classes.inputField}
-                 type='file'                 
+                 type='file' 
+                 
+                                
                 placeholder='ID Proof' 
                 onChange={(e)=>handleUploadFile(e)} 
               />
@@ -253,6 +264,7 @@ return (
              <div style={{width:'100%',textAlign:'center',justifyContent:'center',display:'flex'}}>
              <Message message={message}/>
             </div>
+            
             <Button  
               size='small'
               className={classes.searchVendorBtn}
