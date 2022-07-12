@@ -1,86 +1,76 @@
-import {useState} from 'react'
+import { useState } from "react";
 import Card from "@mui/material/Card";
 import Typography from "@mui/material/Typography";
 import TextField from "@mui/material/TextField";
-import Button from '@mui/material/Button'
-import TableContainer from "@mui/material/TableContainer";
-import Paper from "@mui/material/Paper";
-import Table from "@mui/material/Table";
-import TableRow from "@mui/material/TableRow";
-import TableHead from "@mui/material/TableHead";
-import TableBody from "@mui/material/TableBody";
-import TableCell from "@mui/material/TableCell";
-import {useForm ,useFieldArray, Controller} from 'react-hook-form'
+import Button from "@mui/material/Button";
+import { useForm, useFieldArray, Controller } from "react-hook-form";
 import { makeStyles } from "@material-ui/core/styles";
-import Select from 'react-select'
+import Select from "react-select";
+import { permissionList } from "./permissionList";
 
-import InputLabel from '@mui/material/InputLabel';
-import MenuItem from '@mui/material/MenuItem';
-import FormControl from '@mui/material/FormControl';
 
 
 const useStyles = makeStyles((theme) => ({
-    table: {
-      maxHeight: "70vh",
-    },
-    card: {
-      border: "1px solid #7fab07",
-      borderStyle: "dashed",
-      paddingTop: "30px",
-      paddingBottom: "10px",
-      height:'40vh'
-    },
-    btns: {
-      display: "flex",
-    },
-  }));
+  card: {
+    padding: "20px 10px 300px 10px",
+    boxShadow: "0 0 0 0",
+    borderRadius: "0",
+    color: "#00477e",
+  },
+  inputGroup: {
+    display: "flex",
+    gap: "20px",
+    marginBottom: "10px",
+    alignItems: "center",
+  },
+  permissionSection: {
+    marginTop: "20px",
+  },
+  permissionSectionTable: {
+    display: "flex",
+    flexDirection: "column",
+    width: "100",
+    border: "solid 1px black",
+  },
+  permissionHeadingContainer: {
+    display: "flex",
+    padding: "20px 10px",
+    fontSize: "20px",
+    fontWeight: "600",
+    borderBottom: "solid 1px black",
+  },
+  permissionDataContainer: {
+    display: "flex",
+    alignItems: "center",
+    padding: "10px 10px",
+    borderTop: "solid 1px black",
+  },
+  submitBtnContainer: {
+    display: "flex",
+    justifyContent: "flex-end",
+  },
+}));
 
-  const permissionList = [
-    {
-        value:'',label:'Manage Croftz Admin'
-      },
-    {
-    value:'Manage Croftz Admin',label:'Manage Croftz Admin'
-  },
-  {
-    value:'Manage Croftz User',label:'Manage Croftz User'
-  },
-  {
-    value:'Manage Vendor',label:'Manage Vendor'
-  },
-  {
-    value:'Manage Vendor Admin',label:'Manage Vendor Admin'
-  },
-]
 
-let renderCount = 0;
- 
+
 const CreateSystemRole = () => {
-    const [age, setAge] = useState('');
-    const classes = useStyles();
-    const {register, handleSubmit,control} = useForm()
-    const headings = ["Sr.No","Permission Name"," "]
-    const [personName, setPersonName] = useState([]);
-    const { fields, append, remove } = useFieldArray({
-        control,
-        name: "permissions"
-      });    
+  const classes = useStyles();
+  const { register, handleSubmit, control } = useForm();
+ 
+  
 
-    const onSubmit = (data)=>{
-console.log(data)
-    }
+  const { fields, append, remove } = useFieldArray({
+    control,
+    name: "permissions",
+  });
 
-    renderCount++;   
-   
-   
+  const onSubmit = (data) => {
+    console.log(data);
+    setPermission(data.permissions);
+  };
+
   return (
-    <Card
-      style={{
-        padding: "0px 10px 10px 10px",
-        boxShadow: "0 0 0 0",
-        borderRadius: "0",
-      }}
-    >
+    <Card className={classes.card}>
       <Typography
         variant="h6"
         sx={{
@@ -93,101 +83,77 @@ console.log(data)
       >
         Edit/CreateSystemRole
       </Typography>
+      {/* form starts here  */}
       <form onSubmit={handleSubmit(onSubmit)}>
-        <div
-          className="inputGroup"
-          style={{
-            display: "flex",
-            gap: "20px",
-            marginBottom: "10px",
-            alignItems: "center",
-          }}
-        >
+        {/* first input  */}
+        <div className={classes.inputGroup}>
           <lable>Unique System Role ID </lable>
-          <TextField placeholder="Unique System Role ID"  name='uniqueSystemRoleId'  {...register('uniqueSystemRoleId')}/>
+          <TextField
+            placeholder="Unique System Role ID"
+            name="uniqueSystemRoleId"
+            {...register("uniqueSystemRoleId")}
+          />
         </div>
-
-        <div
-          className="inputGroup"
-          style={{
-            display: "flex",
-            gap: "20px",
-            marginBottom: "10px",
-            alignItems: "center",
-          }}
-        >
+          {/* second input */}
+        <div className={classes.inputGroup}>
           <lable>System Role Name </lable>
-          <TextField placeholder="System Role Name" name='systemRoleName' {...register('systemRoleName')}/>
-          
+          <TextField
+            placeholder="System Role Name"
+            name="systemRoleName"
+            {...register("systemRoleName")}
+          />
         </div>
-        <div>
-        <lable>System Role Permissions </lable>
-        
-        {/* <ul>
-          {fields.map((item, index) => {
-            return (
-              <li key={item.id}>
-                <Controller
-                  as={<TextField label="Name" />}
-                  name={`permissions[${index}].text`}
-                  control={control}
-                  mode="onBlur"
-                  defaultValue={item.text}
-                />
-                <button type="button" onClick={() => remove(index)}>
-                  Delete
-                </button>
-              </li>
-            );
-          })}
-        </ul> */}
-        
-       
 
-        {/* <Card className={classes.card}>
-        <TableContainer component={Paper} className={classes.table}>
-        <Table sx={{ minWidth: 650}} aria-label="simple table">
-          
-          <TableHead>
-            <TableRow>
-              {headings.map((item) => (
-                <TableCell align="left">{item}</TableCell>
-              ))}
-
-              <TableCell align="center"></TableCell>
-            </TableRow>
-          </TableHead>
-         
-          <TableBody >
-           <TableRow >
-            <TableCell >1</TableCell>
-            <TableCell >
-            <Controller
-        name="permission name"
-        control={control}
-        defaultValue=''
-        render={({ field }) => <Select 
-          {...field} 
-          options={permissionList} 
-
-        />}
-      />
-                
+         {/* permissions section starts here */}
             
-            </TableCell>
-            <TableCell >1</TableCell>
-           </TableRow>
-         
-            
-          </TableBody>
-        </Table>
-      </TableContainer>
-      </Card>
-        */}
+        <div className={classes.permissionSection}>
+          <lable>System Role Permissions </lable>
+          <div className={classes.permissionSectionTable}>
+            {/* table headings section */}
+            <div className={classes.permissionHeadingContainer}>
+              <div style={{ flex: "2" }}>srno</div>
+              <div style={{ flex: "4" }}>
+                <span style={{ marginLeft: "10px" }}>Permissions Name</span>
+              </div>
+              <div style={{ flex: "3" }}></div>
+            </div>
 
+            {/* table data section */}
+            {fields.map((item, index) => (
+              <div
+                key={item.id}
+                className={classes.permissionDataContainer}
+                style={{}}
+              >
+                <div style={{ flex: "2" }}>{index + 1}</div>
+                <div style={{ flex: "4" }}>
+                  <div style={{ width: "80%", marginLeft: "10px" }}>
+                    <Controller
+                      name={`permissions.${index}.permissionName`}
+                      control={control}
+                      defaultValue=""
+                      render={({ field }) => (
+                        <Select {...field} options={permissionList} />
+                      )}
+                    />
+                  </div>
+                </div>
+                <div style={{ flex: "3" }}>
+                  <button type="button" onClick={() => remove(index)}>
+                    Delete
+                  </button>
+                </div>
+              </div>
+            ))}
+          </div>
+          <button type="button" onClick={() => append({ permissionName: "" })}>
+            add permission
+          </button>
         </div>
-        <div style={{display:'flex',justifyContent:'flex-end'}}>
-        <Button type='submit' variant="contained" color="primary" >Submit</Button>
+        <div className={classes.submitBtnContainer}>
+          <Button type="submit" variant="contained" color="primary">
+            Submit
+          </Button>
         </div>
       </form>
     </Card>
