@@ -2,35 +2,35 @@ const permissionList = [
   
   {
     value: "Manage Croftz Admin",
-    label: "Manage Croftz Admin",
+    short_id: "MANAGE_CROFTZ_ADMIN",
   },
   {
     value: "Manage Croftz User",
-    label: "Manage Croftz User",
+    short_id: "MANAGE_CROFTZ_USER",
   },
   {
     value: "Manage Vendor",
-    label: "Manage Vendor",
+    short_id: "MANAGE_VENDOR",
   },
   {
     value: "Manage Vendor Admin",
-    label: "Manage Vendor Admin",
+    short_id: "MANAGE_VENDOR_ADMIN",
   },
   {
     value: "Manage Vendor User",
-    label: "Manage Vendor User",
+    short_id: "MANAGE_VENDOR_USER",
   },
   {
     value: "Manage Customer",
-    label: "Manage Customer",
+    short_id: "MANAGE_CUSTOMER",
   },
   {
     value: "Manage Customer Admin",
-    label: "Manage Customer Admin",
+    short_id: "MANAGE_CUSTOMER_ADMIN",
   },
   {
     value: "Manage Customer User",
-    label: "Manage Customer User",
+    short_id: "MANAGE_CUSTOMER_USER",
   },
 ];
 

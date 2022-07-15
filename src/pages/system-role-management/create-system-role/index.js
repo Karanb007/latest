@@ -6,7 +6,8 @@ import Button from "@mui/material/Button";
 import { useForm, useFieldArray, Controller } from "react-hook-form";
 import { makeStyles } from "@material-ui/core/styles";
 import Select from "react-select";
-import { permissionList } from "./permissionList";
+import { permissionList } from "../permissionList";
+import {useRouter} from 'next/router'
 
 
 
@@ -56,7 +57,8 @@ const useStyles = makeStyles((theme) => ({
 const CreateSystemRole = () => {
   const classes = useStyles();
   const { register, handleSubmit, control } = useForm();
- 
+  const router = useRouter()
+  console.log(router)
   
 
   const { fields, append, remove } = useFieldArray({
@@ -66,7 +68,10 @@ const CreateSystemRole = () => {
 
   const onSubmit = (data) => {
     console.log(data);
-    setPermission(data.permissions);
+    // setPermission(data.permissions);
+
+    router.push('/')
+
   };
 
   return (
@@ -123,7 +128,7 @@ const CreateSystemRole = () => {
               <div
                 key={item.id}
                 className={classes.permissionDataContainer}
-                style={{}}
+              
               >
                 <div style={{ flex: "2" }}>{index + 1}</div>
                 <div style={{ flex: "4" }}>
