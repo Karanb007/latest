@@ -1,6 +1,7 @@
 // ** Icon imports
 import Login from 'mdi-material-ui/Login'
 import Table from 'mdi-material-ui/Table'
+
 import CubeOutline from 'mdi-material-ui/CubeOutline'
 import HomeOutline from 'mdi-material-ui/HomeOutline'
 import FormatLetterCase from 'mdi-material-ui/FormatLetterCase'
@@ -43,10 +44,11 @@ const navigation = () => {
     //   path: '/pages/error',
     //   openInNewTab: true
     // },
+
     {
-      title: 'Register Customer',
+      title: 'App User',
       icon: Table,
-      path: '/registerCustomer'
+      path: '/appUser/appUserRegistration'
     },
     {
       title: 'vendor',
@@ -57,6 +59,11 @@ const navigation = () => {
       title: 'Manage Users',
       icon: Table,
       path: '/manageUsers'
+    },
+    {
+      title: 'Register Customer',
+      icon: Table,
+      path: '/registerCustomer'
     }
     // {
     //   sectionTitle: 'User Interface'
