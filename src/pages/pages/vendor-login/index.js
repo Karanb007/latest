@@ -91,7 +91,11 @@ const LoginPage = () => {
     await axios.post('https://nq0tehfqgh.execute-api.us-east-1.amazonaws.com/dev/vendors/login',user)
                .then((res)=>{
                 if(res.status == 200){
-                  router.push('/')
+                  console.log(res)
+                  localStorage.setItem('role',JSON.stringify(res.data.customer.ur_type));
+                  localStorage.setItem('token',JSON.stringify(res.data.token));
+                  localStorage.setItem('vid', res.data.customer.ur_id);
+                  router.push('/vendor')
                 }
                }).catch((err)=>console.log(err))
   };

@@ -13,9 +13,12 @@ import AlertCircleOutline from 'mdi-material-ui/AlertCircleOutline'
 import GoogleCirclesExtended from 'mdi-material-ui/GoogleCirclesExtended'
 
 const navigation = () => {
+ 
+  try {
   const isAuthorized = false
-  const [role,setRole] = useState(2)
-  if(role == 2){
+  const role = JSON.parse(localStorage.getItem('role'));
+  console.log(role)
+  if(role == "1"){
     return[
       // {
       //   title: 'Dashboard',
@@ -151,7 +154,7 @@ const navigation = () => {
       {
         title: 'Customer',
         icon: Table,
-        path: '/customer'
+        path: '/customer-form'
       }
       // {
       //   sectionTitle: 'User Interface'
@@ -183,6 +186,9 @@ const navigation = () => {
       //   path: '/form-layouts'
       // }
     ]
+  }}
+  catch(e){
+   
   }
   
 }

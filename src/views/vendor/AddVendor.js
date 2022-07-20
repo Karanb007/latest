@@ -154,13 +154,16 @@ const AddVendor = () => {
      vdata.ur_address = vendorInfo.address
      vdata.ur_phone = vendorInfo.phone
      vdata.ur_password = vendorInfo.password
-
+   
       await axios
         .post(
           'https://nq0tehfqgh.execute-api.us-east-1.amazonaws.com/dev/vendors',vdata
         )
         .then((res) => {
-          console.log(res);
+          if(res.status==200){
+            setVendorInfo(initial)
+          }
+         
         })
         .catch((error) => console.log(error));
   
@@ -173,10 +176,10 @@ const AddVendor = () => {
   // });
 
    
-    setTimeout(()=>{
-      setMessage({})
-      setVendorInfo(initial)
-    },3000)
+    // setTimeout(()=>{
+    //   setMessage({})
+    //   setVendorInfo(initial)
+    // },3000)
   }
   return (
     <Grid container>

@@ -75,7 +75,9 @@ const AppBarContent = props => {
       
        <Typography variant='body2'>
                 <Link passHref href='/pages/vendor-login'>
-                  <LinkStyled>Login</LinkStyled>
+                  {localStorage.getItem('token')?<LinkStyled onClick={()=> {localStorage.removeItem('token');
+                    localStorage.removeItem('role')
+                }}>Logout</LinkStyled>:<LinkStyled>Login</LinkStyled>}
                 </Link>
               </Typography>
         {/* <ModeToggler settings={settings} saveSettings={saveSettings} />

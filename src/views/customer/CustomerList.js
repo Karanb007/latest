@@ -85,32 +85,22 @@ const CustomerList = () => {
   },[])
   
   const getAllCustomers = async () => {
+    const vid = localStorage.getItem("vid")
     setLoading(true)
     await axios
       .get(
-        "https://nq0tehfqgh.execute-api.us-east-1.amazonaws.com/dev/customers"
+        `https://nq0tehfqgh.execute-api.us-east-1.amazonaws.com/dev/vendors/${vid}`
       )
       .then((res) => {
-        const cdata = [];
-        res.data.customer.forEach((item) => {
-          const a = {};
-          a.id = item.ur_id;
-          a.name = item.ur_name;
-          a.email = item.ur_email;
-          a.address = item.ur_address;
-          a.phone = item.ur_phone;
-          a.role = item.ur_role;
-          cdata.push(a);
-        });
-       
-      setData(cdata)
+        console.log(res.data.customers)
+        setData(res.data.customers)
       setLoading(false)
       })
       .catch((error) => console.log(error));
   };
   return (
     <>
-{loading && <Loader/>}
+
       {data.length > 0 && (
         <ListTable
           srno={false}

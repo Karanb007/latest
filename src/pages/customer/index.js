@@ -15,6 +15,7 @@ import MenuItem from "@mui/material/MenuItem";
 import AddCustomer from "src/views/customer/AddCustomer";
 import SearchVendor from "src/views/vendor/SearchVendor";
 import CustomerList from "src/views/customer/CustomerList";
+import CustomerForm from "src/views/customer/CustomerForm";
 
 import TableBasic from "src/views/tables/TableBasic";
 import TableDense from "src/views/tables/TableDense";
