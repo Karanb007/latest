@@ -27,7 +27,9 @@ const LinkStyled = styled('a')(({ theme }) => ({
 const AppBarContent = props => {
   // ** Props
   const { hidden, settings, saveSettings, toggleNavVisibility } = props
-
+  let isAuthorized = false;
+  // let toke = localStorage?.getItem('token');
+  // let  role = localStorage?.getItem('role');
   // ** Hook
   const hiddenSm = useMediaQuery(theme => theme.breakpoints.down('sm'))
 
@@ -74,15 +76,17 @@ const AppBarContent = props => {
 
       
        <Typography variant='body2'>
-                <Link passHref href='/pages/vendor-login'>
+         
+                {/* <Link passHref href='/pages/vendor-login'>
                   {localStorage.getItem('token')?<LinkStyled onClick={()=> {localStorage.removeItem('token');
                     localStorage.removeItem('role')
                 }}>Logout</LinkStyled>:<LinkStyled>Login</LinkStyled>}
-                </Link>
+                </Link> */}
+
               </Typography>
-        {/* <ModeToggler settings={settings} saveSettings={saveSettings} />
-        <NotificationDropdown />
-        <UserDropdown /> */}
+          <ModeToggler settings={settings} saveSettings={saveSettings} />
+          <NotificationDropdown />
+          <UserDropdown />
       </Box>
     </Box>
   )

@@ -133,13 +133,13 @@ const customerAreSelfServeType = [
 //   customerAreSelfServe: 'No: Vendor Uploads for Customers'
 // }
 const initial = {
-  name:"",
-  email:"",
-  address:"",
-  phone:"",
-  password:""
+  cf_a1 : "",
+  cf_a2 : "",
+  cf_a3 : "",
+  cf_a4 : "",
+
 }
-const AddCustomer = () => {
+const EditCustomerForm = () => {
   const classes = useStyles()
   const router = useRouter()
   const [customerInfo, setCustomerInfo] = useState(initial)
@@ -151,30 +151,19 @@ const AddCustomer = () => {
     setCustomerInfo({ ...customerInfo, [event.target.name]: event.target.value })
   }
   
-  const submitVendorInfo = async() => {
-    let vid = ""
-    const cdata = {}
-    let idFromLocalStorage = localStorage.getItem("vid")
-    if( idFromLocalStorage !== null){
-      vid =  idFromLocalStorage
-    }else{
-      vid = "5a8823f4-c978-42ed-b252-e40c6ac63875"
-    }
-   
-   
-     
-     cdata.ur_name = customerInfo.name
-     cdata.ur_email = customerInfo.email
-     cdata.ur_address = customerInfo.address
-     cdata.ur_phone = customerInfo.phone
-     cdata.ur_password = customerInfo.password
-     cdata.cs_vn_id = vid
-
-  console.log(cdata)
-     
+  const submitCustomerForm= async() => {
+    // console.log(customerInfo)
+    //  const cdata = {}
+    //  cdata.ur_name = customerInfo.cf_a1
+    //  cdata.ur_email = customerInfo.email
+    //  cdata.ur_address = customerInfo.address
+    //  cdata.ur_phone = customerInfo.phone
+    //  cdata.ur_password = customerInfo.password
+    //  cdata.cs_vn_id = "f4cc1426-9158-47fa-81bc-5171eb3423c3"
+    const id = JSON.stringify(localStorage.getItem('id'))
   await axios
         .post(
-          `https://nq0tehfqgh.execute-api.us-east-1.amazonaws.com/dev/customers`,cdata
+          `https://nq0tehfqgh.execute-api.us-east-1.amazonaws.com/dev/customers/customerform/${id}`,customerInfo
         )
         .then((res) => {
           console.log(res);
@@ -184,13 +173,13 @@ const AddCustomer = () => {
         })
         .catch((error) => console.log(error));
   
-   
-  //   await axios.post('http://localhost:3006/vendors',customerInfo
-  //   ).then(resp => {
-  //     setMessage({text:"Information has been submitted...",color:"green"})
-  //   }).catch(error => {
-  //     setMessage({text:"Something went wrong, try again later...",color:"red"})
-  // });
+//     backend api will be called here
+//     await axios.post('http://localhost:3006/vendors',customerInfo
+//     ).then(resp => {
+//       setMessage({text:"Information has been submitted...",color:"green"})
+//     }).catch(error => {
+//       setMessage({text:"Something went wrong, try again later...",color:"red"})
+//   });
 
    
    
@@ -201,28 +190,28 @@ const AddCustomer = () => {
       <Grid item xs={12} md={6}>
         <Card className={classes.card}>
         <div className={classes.inputFieldContainer}>
-             <div className={classes.inputFieldName}>Customer Name</div>
+             <div className={classes.inputFieldName}>question one</div>
              <TextField
                  className={classes.inputField}    
-                 name='name'  
-                 value={customerInfo.name}          
-                placeholder='Customer Name'
+                 name='cf_a1'  
+                 value={customerInfo.cf_a1}          
+                placeholder='question one'
                 onChange={(e)=>handleChange(e)}  
               />
                </div> 
 
                <div className={classes.inputFieldContainer}>
-             <div className={classes.inputFieldName}>Customer Email</div>
+             <div className={classes.inputFieldName}>question two</div>
              <TextField
                  className={classes.inputField}    
-                 name='email'  
-                 value={customerInfo.email}          
-                placeholder='Customer Email'
+                 name='cf_a2'  
+                 value={customerInfo.cf_a2}          
+                placeholder='question two'
                 onChange={(e)=>handleChange(e)}  
               />
                </div> 
 
-               <div className={classes.inputFieldContainer}>
+               {/* <div className={classes.inputFieldContainer}>
              <div className={classes.inputFieldName}>Customer phone</div>
              <TextField
                  className={classes.inputField}    
@@ -231,7 +220,7 @@ const AddCustomer = () => {
                 placeholder='Customer Phone'
                 onChange={(e)=>handleChange(e)}  
               />
-               </div> 
+               </div>  */}
                {/* <div className={classes.inputFieldContainer}>
              <div className={classes.inputFieldName}>Unique Vendor Id</div>
              <TextField
@@ -313,13 +302,13 @@ const AddCustomer = () => {
               marginRight: '40px'
             }}
           >
-            <div className={classes.inputFieldName}>Customer Address</div>
+            <div className={classes.inputFieldName}>qustion three</div>
             <TextField
-             value={customerInfo.address}
+             value={customerInfo.cf_a3}
               className={classes.inputField}
               style={{ width: '100%' }}
-              placeholder='Customer Address'
-              name='address'
+              placeholder='qustion three'
+              name='cf_a3'
               onChange={(e)=>handleChange(e)} 
               
             />
@@ -328,13 +317,13 @@ const AddCustomer = () => {
           </div>
 
           <div className={classes.inputFieldContainer}>
-             <div className={classes.inputFieldName}>Customer Password</div>
+             <div className={classes.inputFieldName}>question four</div>
              <TextField
-             type='password'
+            
                  className={classes.inputField}    
-                 name='password'  
-                 value={customerInfo.password}          
-                placeholder='Customer Password'
+                 name='cf_a4'  
+                 value={customerInfo.cf_a4}          
+                placeholder='question four'
                 onChange={(e)=>handleChange(e)}  
               />
                </div> 
@@ -385,7 +374,7 @@ const AddCustomer = () => {
           }
           
         </div>
-        <Button size='small' className={classes.customerInfoSubmitBtn} onClick={submitVendorInfo}>
+        <Button size='small' className={classes.customerInfoSubmitBtn} onClick={submitCustomerForm}>
           Submit
         </Button>
       </div>
@@ -393,4 +382,4 @@ const AddCustomer = () => {
     </Grid>
   )
 }
-export default AddCustomer
+export default EditCustomerForm

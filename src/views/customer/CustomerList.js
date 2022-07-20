@@ -93,7 +93,18 @@ const CustomerList = () => {
       )
       .then((res) => {
         console.log(res.data.customers)
-        setData(res.data.customers)
+        const cdata = [];
+        res.data.customers.forEach((item) => {
+          const a = {};
+          a.id = item.ur_id;
+          a.name = item.ur_name;
+          a.email = item.ur_email;
+          a.address = item.ur_address;
+          a.phone = item.ur_phone;
+          a.role = item.ur_role;
+          cdata.push(a);
+        });
+        setData(cdata)
       setLoading(false)
       })
       .catch((error) => console.log(error));

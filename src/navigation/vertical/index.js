@@ -14,10 +14,10 @@ import GoogleCirclesExtended from 'mdi-material-ui/GoogleCirclesExtended'
 
 const navigation = () => {
  
-  try {
-  const isAuthorized = false
-  const role = JSON.parse(localStorage.getItem('role'));
-  console.log(role)
+  let role = "0"
+  // const isAuthorized = false
+  // const role = JSON.parse(localStorage.getItem('role'));
+  // console.log(role)
   if(role == "1"){
     return[
       // {
@@ -102,7 +102,7 @@ const navigation = () => {
       //   path: '/form-layouts'
       // }
     ]
-  }else{
+  }else if(role == "2"){
     return[
       // {
       //   title: 'Dashboard',
@@ -129,13 +129,7 @@ const navigation = () => {
       //   path: '/pages/register',
       //   openInNewTab: true
       // },
-      // {
-      //   title: 'Error',
-      //   icon: AlertCircleOutline,
-      //   path: '/pages/error',
-      //   openInNewTab: true
-      // },
-  
+    
       // {
       //   title: 'App User',
       //   icon: Table,
@@ -156,39 +150,25 @@ const navigation = () => {
         icon: Table,
         path: '/customer-form'
       }
-      // {
-      //   sectionTitle: 'User Interface'
-      // },
-      // {
-      //   title: 'Typography',
-      //   icon: FormatLetterCase,
-      //   path: '/typography'
-      // },
-      // {
-      //   title: 'Icons',
-      //   path: '/icons',
-      //   icon: GoogleCirclesExtended
-      // },
-      // {
-      //   title: 'Cards',
-      //   icon: CreditCardOutline,
-      //   path: '/cards'
-      // },
-      // {
-      //   title: 'Tables',
-      //   icon: Table,
-      //   path: '/tables'
-      // },
+      
      
-      // {
-      //   icon: CubeOutline,
-      //   title: 'Form Layouts',
-      //   path: '/form-layouts'
-      // }
+     
     ]
-  }}
-  catch(e){
-   
+  }else{
+
+    return[
+      
+      {
+        title: 'vendors',
+        icon: Table,
+        path: '/admin/vendors'
+      },
+      {
+        title: 'customers',
+        icon: Table,
+        path: '/admin/customers'
+      },
+    ]
   }
   
 }
