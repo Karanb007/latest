@@ -3,6 +3,8 @@ import axios from "axios";
 import Link from "next/link";
 import Image from "next/image";
 import Router from 'next/router'
+import { useRouter } from "next/router";
+
 // ** MUI Imports
 import Card from "@mui/material/Card";
 import Paper from "@mui/material/Paper";
@@ -36,7 +38,23 @@ const useStyles = makeStyles((theme) => ({
 
 const ListTable = ({ headings, data, actions,srno,buttons,componentHeading }) => {
   const classes = useStyles();
-  
+  const router = useRouter();
+
+  const handleDelete = async(id,backendLink,redirectingPath)=>{
+   
+    await axios.delete(backendLink+id)
+               .then((res)=>{
+                    
+                      if(res.status == 200){
+                        router.push({
+                          pathname: redirectingPath,
+                          
+                        })
+                      }
+                    
+               })
+               .catch((err)=>console.log(err))
+  }
   // let headings = []
   // let data = []
 
@@ -91,12 +109,15 @@ console.log("data from listtable:",data)
                
                 {buttons && <TableCell>{buttons.map((btn)=>(
                 <button onClick={()=>{
-                 
+                  if(btn.name === 'edit' || btn.name === 'profile'){
                   Router.push({
                     pathname: btn.path,
                     query:{id:items.id}
-                  })
-                  console.log(btn.path+items.id)}}>{btn.name}</button>
+                  })}else{
+                    handleDelete(items.id,btn.backendLink,btn.redirectingPath)
+                  }
+                 
+                }}>{btn.name}</button>
                 ))}</TableCell>}
                 {/* <TableCell>{actions.map((item)=> item)} </TableCell> */}
                 

@@ -1,6 +1,6 @@
 // ** React Imports
 import { useState,useEffect } from 'react'
-
+import axios from 'axios'
 // ** Next Imports
 import Link from 'next/link'
 import { useRouter } from 'next/router'
@@ -84,9 +84,19 @@ const LoginPage = () => {
   // const handleMouseDownPassword = event => {
   //   event.preventDefault()
   // }
-  const submit = ()=>{
-    
-    console.log(JSON.stringify(values));
+  const submit = async(e)=>{
+    e.preventDefault
+    console.log(values);
+    const user = {}
+    user.ur_email = values.email
+    user.ur_password = values.password
+    console.log(user)
+    await axios.post('https://nq0tehfqgh.execute-api.us-east-1.amazonaws.com/dev/customers/login',user)
+               .then((res)=>{
+                if(res.status == 200){
+                  router.push('/')
+                }
+               }).catch((err)=>console.log(err))
   }
 
   return (
@@ -163,15 +173,10 @@ const LoginPage = () => {
                 fontSize: '1.5rem !important'
               }}
             >
-              {themeConfig.templateName}
+              Customer Login
             </Typography>
           </Box>
-          <Box sx={{ mb: 6 }}>
-            <Typography variant='h5' sx={{ fontWeight: 600, marginBottom: 1.5 }}>
-              Welcome to {themeConfig.templateName}! 👋🏻
-            </Typography>
-            <Typography variant='body2'>Please sign-in to your account and start the adventure</Typography>
-          </Box>
+          
           <form noValidate autoComplete='off' onSubmit={submit}  >
             <TextField autoFocus fullWidth type='text' name='email' id='email' label='Email' sx={{ marginBottom: 4 }}  onChange={(e)=>handleChange(e)} />
             <TextField autoFocus fullWidth type='password' name='password' id='password' label='Password' sx={{ marginBottom: 4 }}  onChange={(e)=>handleChange(e)} />
@@ -215,7 +220,7 @@ const LoginPage = () => {
             >
               Login
             </Button>
-            <Box sx={{ display: 'flex', alignItems: 'center', flexWrap: 'wrap', justifyContent: 'center' }}>
+            {/* <Box sx={{ display: 'flex', alignItems: 'center', flexWrap: 'wrap', justifyContent: 'center' }}>
               <Typography variant='body2' sx={{ marginRight: 2 }}>
                 New on our platform?
               </Typography>
@@ -224,32 +229,13 @@ const LoginPage = () => {
                   <LinkStyled>Create an account</LinkStyled>
                 </Link>
               </Typography>
-            </Box>
+            </Box> */}
             <Divider sx={{ my: 5 }}>or</Divider>
-            <Box sx={{ display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
-              <Link href='/' passHref>
-                <IconButton component='a' onClick={e => e.preventDefault()}>
-                  <Facebook sx={{ color: '#497ce2' }} />
-                </IconButton>
-              </Link>
-              <Link href='/' passHref>
-                <IconButton component='a' onClick={e => e.preventDefault()}>
-                  <Twitter sx={{ color: '#1da1f2' }} />
-                </IconButton>
-              </Link>
-              <Link href='/' passHref>
-                <IconButton component='a' onClick={e => e.preventDefault()}>
-                  <Github
-                    sx={{ color: theme => (theme.palette.mode === 'light' ? '#272727' : theme.palette.grey[300]) }}
-                  />
-                </IconButton>
-              </Link>
-              <Link href='/' passHref>
-                <IconButton component='a' onClick={e => e.preventDefault()}>
-                  <Google sx={{ color: '#db4437' }} />
-                </IconButton>
-              </Link>
-            </Box>
+            <Typography variant='body2' style={{display:'flex',justifyContent:'center'}}>
+                <Link passHref href='/pages/vendor-login'>
+                  <LinkStyled>Vendor Login</LinkStyled>
+                </Link>
+              </Typography>
           </form>
         </CardContent>
       </Card>

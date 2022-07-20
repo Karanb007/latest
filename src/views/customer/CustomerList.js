@@ -2,7 +2,7 @@ import { useState, useEffect } from "react";
 import axios from "axios";
 import Link from "next/link";
 import { useRouter } from "next/router";
- 
+import Loader from '../Loader'
 // ** MUI Imports
 import Card from "@mui/material/Card";
 import Paper from "@mui/material/Paper";
@@ -18,7 +18,6 @@ import Button from "@mui/material/Button";
 import AccountEdit from "mdi-material-ui/AccountEdit";
 // components
 import ListTable from "../ListTable";
-import Loader from '../Loader'
 
 const useStyles = makeStyles((theme) => ({
   table: {
@@ -42,13 +41,13 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-const VendorList = () => {
+const CustomerList = () => {
   const classes = useStyles();
-  const [vendors, setVendors] = useState([]);
+  const [customer, setCustomer] = useState([]);
+  const [loading,setLoading] = useState(false)
   const [data, setData] = useState([]);
-  const [loading,setLoading] =useState(false)
-  
-  
+  const router = useRouter()
+  console.log("path:"+JSON.stringify(router))
   // const headings = [
   //   "Vendor Id",
   //   "Other Trading Name",
@@ -76,24 +75,24 @@ const VendorList = () => {
   // ];
 
   const buttons = [
-    { name: "profile", path: "/vendor/vendor-profile/" },
-    { name: "edit", path: "/vendor/vendor-edit/" },
-    { name: "delete",backendLink:'https://nq0tehfqgh.execute-api.us-east-1.amazonaws.com/dev/vendors/',redirectingPath:'/vendor'},
+    { name: "profile", path: "/customer/customer-profile/" },
+    { name: "edit", path: "/customer/customer-edit/" },
+    { name: "delete", backendLink:'https://nq0tehfqgh.execute-api.us-east-1.amazonaws.com/dev/customers/',redirectingPath:'/customer' },
   ];
   
   useEffect(()=>{
-    getAllVendor()
+    getAllCustomers()
   },[])
   
-  const getAllVendor = async () => {
+  const getAllCustomers = async () => {
     setLoading(true)
     await axios
       .get(
-        "https://nq0tehfqgh.execute-api.us-east-1.amazonaws.com/dev/vendors"
+        "https://nq0tehfqgh.execute-api.us-east-1.amazonaws.com/dev/customers"
       )
       .then((res) => {
-        const vdata = [];
-        res.data.vendors.forEach((item) => {
+        const cdata = [];
+        res.data.customer.forEach((item) => {
           const a = {};
           a.id = item.ur_id;
           a.name = item.ur_name;
@@ -101,17 +100,17 @@ const VendorList = () => {
           a.address = item.ur_address;
           a.phone = item.ur_phone;
           a.role = item.ur_role;
-          vdata.push(a);
+          cdata.push(a);
         });
-        setData(vdata);
-         setLoading(false)
-        console.log(res);
+       
+      setData(cdata)
+      setLoading(false)
       })
       .catch((error) => console.log(error));
   };
   return (
     <>
-    {loading && <Loader/>}
+{loading && <Loader/>}
       {data.length > 0 && (
         <ListTable
           srno={false}
@@ -168,4 +167,4 @@ const VendorList = () => {
     // </Card>
   );
 };
-export default VendorList;
+export default CustomerList;

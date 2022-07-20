@@ -1,6 +1,7 @@
 // ** MUI Imports
 import { useState, useEffect } from 'react'
 import axios from 'axios'
+import { useRouter } from "next/router";
 import Grid from '@mui/material/Grid'
 import Link from '@mui/material/Link'
 import Card from '@mui/material/Card'
@@ -122,40 +123,68 @@ const customerAreSelfServeType = [
     label: 'Yes: Customer Uploads by self'
   }
 ]
-const initialCustomerInfo = {
-  uniqueVendorId: '',
-  otherTradingName: '',
-  soleTrader: 'Yes',
-  registrationNumber: '',
-  country: 'United Kingdom',
-  vendorStatus: 'Pending Verification',
-  customerAreSelfServe: 'No: Vendor Uploads for Customers'
+// const initialVendorInfo = {
+//   uniqueVendorId: '',
+//   otherTradingName: '',
+//   soleTrader: 'Yes',
+//   registrationNumber: '',
+//   country: 'United Kingdom',
+//   vendorStatus: 'Pending Verification',
+//   customerAreSelfServe: 'No: Vendor Uploads for Customers'
+// }
+const initial = {
+  name:"",
+  email:"",
+  address:"",
+  phone:"",
+  password:""
 }
-
-const AppUserRegistration = () => {
+const AddCustomer = () => {
   const classes = useStyles()
-  const [customerInfo, setCustomerInfo] = useState(initialCustomerInfo)
+  const router = useRouter()
+  const [customerInfo, setCustomerInfo] = useState(initial)
   const [message,setMessage] = useState({});
+
+
+ 
   const handleChange = event => {
     setCustomerInfo({ ...customerInfo, [event.target.name]: event.target.value })
   }
   
-  const submitCustomerInfo = async() => {
+  const submitVendorInfo = async() => {
     console.log(customerInfo)
+     const cdata = {}
+     cdata.ur_name = customerInfo.name
+     cdata.ur_email = customerInfo.email
+     cdata.ur_address = customerInfo.address
+     cdata.ur_phone = customerInfo.phone
+     cdata.ur_password = customerInfo.password
+     cdata.cs_vn_id = "f4cc1426-9158-47fa-81bc-5171eb3423c3"
+
+  console.log(cdata)
+     
+  await axios
+        .post(
+          'https://nq0tehfqgh.execute-api.us-east-1.amazonaws.com/dev/customers',cdata
+        )
+        .then((res) => {
+          console.log(res);
+          if(res.status == 200){
+            setCustomerInfo(initial)
+          }
+        })
+        .catch((error) => console.log(error));
   
-    // backend api will be called here
-  //   await axios.post('http://localhost:3006/vendors',customerInfo
-  //   ).then(resp => {
-  //     setMessage({text:"Information has been submitted...",color:"green"})
-  //   }).catch(error => {
-  //     setMessage({text:"Something went wrong, try again later...",color:"red"})
-  // });
+//     backend api will be called here
+//     await axios.post('http://localhost:3006/vendors',customerInfo
+//     ).then(resp => {
+//       setMessage({text:"Information has been submitted...",color:"green"})
+//     }).catch(error => {
+//       setMessage({text:"Something went wrong, try again later...",color:"red"})
+//   });
 
    
-    setTimeout(()=>{
-      setMessage({})
-      setCustomerInfo(initialCustomerInfo)
-    },3000)
+   
   }
   return (
     <Grid container>
@@ -163,11 +192,43 @@ const AppUserRegistration = () => {
       <Grid item xs={12} md={6}>
         <Card className={classes.card}>
         <div className={classes.inputFieldContainer}>
+             <div className={classes.inputFieldName}>Customer Name</div>
+             <TextField
+                 className={classes.inputField}    
+                 name='name'  
+                 value={customerInfo.name}          
+                placeholder='Customer Name'
+                onChange={(e)=>handleChange(e)}  
+              />
+               </div> 
+
+               <div className={classes.inputFieldContainer}>
+             <div className={classes.inputFieldName}>Customer Email</div>
+             <TextField
+                 className={classes.inputField}    
+                 name='email'  
+                 value={customerInfo.email}          
+                placeholder='Customer Email'
+                onChange={(e)=>handleChange(e)}  
+              />
+               </div> 
+
+               <div className={classes.inputFieldContainer}>
+             <div className={classes.inputFieldName}>Customer phone</div>
+             <TextField
+                 className={classes.inputField}    
+                 name='phone'  
+                 value={customerInfo.phone}          
+                placeholder='Customer Phone'
+                onChange={(e)=>handleChange(e)}  
+              />
+               </div> 
+               {/* <div className={classes.inputFieldContainer}>
              <div className={classes.inputFieldName}>Unique Vendor Id</div>
              <TextField
                  className={classes.inputField}    
                  name='uniqueVendorId'  
-                 value={customerInfo.uniqueVendorId}          
+                 value={vendorInfo.uniqueVendorId}          
                 placeholder='Unique Vendor Id'
                 onChange={(e)=>handleChange(e)}  
               />
@@ -178,7 +239,7 @@ const AppUserRegistration = () => {
              <TextField
                  className={classes.inputField}    
                  name='otherTradingName' 
-                 value={customerInfo.otherTradingName}            
+                 value={vendorInfo.otherTradingName}            
                 placeholder='Other Trading Name'
                 onChange={(e)=>handleChange(e)}  
               />
@@ -188,7 +249,7 @@ const AppUserRegistration = () => {
              <div className={classes.inputFieldName}>Individual/Sole Trader</div>
              <TextField
                  className={classes.inputField}
-                 value={customerInfo.soleTrader}                 
+                 value={vendorInfo.soleTrader}                 
                  select
                  required
                  name='soleTrader'
@@ -207,7 +268,7 @@ const AppUserRegistration = () => {
              <TextField
                  className={classes.inputField}    
                  name='registrationNumber' 
-                 value={customerInfo.registrationNumber}        
+                 value={vendorInfo.registrationNumber}        
                 placeholder='Registration Number'
                 onChange={(e)=>handleChange(e)}  
               />
@@ -216,7 +277,7 @@ const AppUserRegistration = () => {
              <div className={classes.inputFieldName}>Country Of Operation</div>
              <TextField
                  className={classes.inputField}
-                 value={customerInfo.country}                 
+                 value={vendorInfo.country}                 
                  select
                  required
                  name='country'
@@ -229,16 +290,50 @@ const AppUserRegistration = () => {
           ))}
                 
               </TextField>
-               </div>
+               </div> */}
         </Card>
       </Grid>
       <Grid item xs={12} md={6}>
         <Card className={classes.card}>
-        <div className={classes.inputFieldContainer}>
+        <div
+            style={{
+              alignItems: 'center',
+              color: '#d4220f',
+             marginBottom:'14px',
+              marginLeft: '40px',
+              marginRight: '40px'
+            }}
+          >
+            <div className={classes.inputFieldName}>Customer Address</div>
+            <TextField
+             value={customerInfo.address}
+              className={classes.inputField}
+              style={{ width: '100%' }}
+              placeholder='Customer Address'
+              name='address'
+              onChange={(e)=>handleChange(e)} 
+              
+            />
+              
+           
+          </div>
+
+          <div className={classes.inputFieldContainer}>
+             <div className={classes.inputFieldName}>Customer Password</div>
+             <TextField
+             type='password'
+                 className={classes.inputField}    
+                 name='password'  
+                 value={customerInfo.password}          
+                placeholder='Customer Password'
+                onChange={(e)=>handleChange(e)}  
+              />
+               </div> 
+        {/* <div className={classes.inputFieldContainer}>
              <div className={classes.inputFieldName}>Vendor Status</div>
              <TextField
                  className={classes.inputField}
-                 value={customerInfo.vendorStatus}                 
+                 value={vendorInfo.vendorStatus}                 
                  select
                  required
                  name='vendorStatus'
@@ -257,7 +352,7 @@ const AppUserRegistration = () => {
              <div className={classes.inputFieldName}>Customer are Self Serve?</div>
              <TextField
                  className={classes.inputField}
-                 value={customerInfo.customerAreSelfServe}                 
+                 value={vendorInfo.customerAreSelfServe}                 
                  select
                  required
                  name='customerAreSelfServe'
@@ -270,7 +365,7 @@ const AppUserRegistration = () => {
           ))}
                 
               </TextField>
-               </div>
+               </div> */}
         </Card>
       </Grid>
       <div className={classes.customerInfoSubmitBtnContainer}>
@@ -281,7 +376,7 @@ const AppUserRegistration = () => {
           }
           
         </div>
-        <Button size='small' className={classes.customerInfoSubmitBtn} onClick={submitCustomerInfo}>
+        <Button size='small' className={classes.customerInfoSubmitBtn} onClick={submitVendorInfo}>
           Submit
         </Button>
       </div>
@@ -289,4 +384,4 @@ const AppUserRegistration = () => {
     </Grid>
   )
 }
-export default AppUserRegistration
+export default AddCustomer

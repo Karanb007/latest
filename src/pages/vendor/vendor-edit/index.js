@@ -1,5 +1,6 @@
 // ** MUI Imports
 import { useState, useEffect } from 'react'
+
 import axios from 'axios'
 import Grid from '@mui/material/Grid'
 import Link from '@mui/material/Link'
@@ -10,6 +11,7 @@ import Button from '@mui/material/Button'
 import TextField from '@mui/material/TextField'
 import MenuItem from '@mui/material/MenuItem'
 
+import { useRouter } from "next/router";
 // ** Demo Components Imports
 import TableBasic from 'src/views/tables/TableBasic'
 import TableDense from 'src/views/tables/TableDense'
@@ -131,22 +133,42 @@ const customerAreSelfServeType = [
 //   vendorStatus: 'Pending Verification',
 //   customerAreSelfServe: 'No: Vendor Uploads for Customers'
 // }
-const initial = {
-  name:"",
-  email:"",
-  address:"",
-  phone:"",
-  password:""
-}
-const AddVendor = () => {
+
+const VendorEdit = () => {
   const classes = useStyles()
-  const [vendorInfo, setVendorInfo] = useState(initial)
+  const [vendorInfo, setVendorInfo] = useState({})
   const [message,setMessage] = useState({});
+  const router = useRouter();
+  const { id } = router.query;
+  
+  
+  useEffect(()=>{
+    getVendor()
+  },[])
+  const getVendor = async () => {
+    await axios
+      .get(
+        `https://nq0tehfqgh.execute-api.us-east-1.amazonaws.com/dev/vendors/${id}`
+      )
+      .then((res) => {
+        const vdata = {};
+        vdata.name = res.data.vendor.ur_name
+        vdata.email = res.data.vendor.ur_email
+        vdata.phone = res.data.vendor.ur_phone
+        vdata.address = res.data.vendor.ur_address
+        vdata.password = res.data.vendor.ur_password
+        console.log(vdata)
+        setVendorInfo(vdata);
+      })
+      .catch((error) => console.log(error));
+  };
+
   const handleChange = event => {
     setVendorInfo({ ...vendorInfo, [event.target.name]: event.target.value })
   }
-  
+
   const submitVendorInfo = async() => {
+    
     console.log(vendorInfo)
      const vdata = {}
      vdata.ur_name = vendorInfo.name
@@ -156,11 +178,17 @@ const AddVendor = () => {
      vdata.ur_password = vendorInfo.password
 
       await axios
-        .post(
-          'https://nq0tehfqgh.execute-api.us-east-1.amazonaws.com/dev/vendors',vdata
+        .put(
+          `https://nq0tehfqgh.execute-api.us-east-1.amazonaws.com/dev/vendors/${id}`,vdata
         )
         .then((res) => {
-          console.log(res);
+          
+         
+
+          if(res.status == 200){
+            router.push(`/vendor/vendor-profile/?id=${id}`)
+            
+          }
         })
         .catch((error) => console.log(error));
   
@@ -173,10 +201,7 @@ const AddVendor = () => {
   // });
 
    
-    setTimeout(()=>{
-      setMessage({})
-      setVendorInfo(initial)
-    },3000)
+   
   }
   return (
     <Grid container>
@@ -376,4 +401,4 @@ const AddVendor = () => {
     </Grid>
   )
 }
-export default AddVendor
+export default VendorEdit

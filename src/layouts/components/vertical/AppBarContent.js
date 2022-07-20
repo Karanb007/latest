@@ -1,10 +1,12 @@
+import Link from 'next/link'
 // ** MUI Imports
 import Box from '@mui/material/Box'
 import TextField from '@mui/material/TextField'
 import IconButton from '@mui/material/IconButton'
 import useMediaQuery from '@mui/material/useMediaQuery'
 import InputAdornment from '@mui/material/InputAdornment'
-
+import Typography from '@mui/material/Typography'
+import { styled, useTheme } from '@mui/material/styles'
 // ** Icons Imports
 import Menu from 'mdi-material-ui/Menu'
 import Magnify from 'mdi-material-ui/Magnify'
@@ -13,6 +15,14 @@ import Magnify from 'mdi-material-ui/Magnify'
 import ModeToggler from 'src/@core/layouts/components/shared-components/ModeToggler'
 import UserDropdown from 'src/@core/layouts/components/shared-components/UserDropdown'
 import NotificationDropdown from 'src/@core/layouts/components/shared-components/NotificationDropdown'
+
+
+const LinkStyled = styled('a')(({ theme }) => ({
+  fontSize: '0.875rem',
+  textDecoration: 'none',
+  color: theme.palette.primary.main
+}))
+
 
 const AppBarContent = props => {
   // ** Props
@@ -61,9 +71,16 @@ const AppBarContent = props => {
             />
           </Box>
         )}
-        <ModeToggler settings={settings} saveSettings={saveSettings} />
+
+      
+       <Typography variant='body2'>
+                <Link passHref href='/pages/vendor-login'>
+                  <LinkStyled>Login</LinkStyled>
+                </Link>
+              </Typography>
+        {/* <ModeToggler settings={settings} saveSettings={saveSettings} />
         <NotificationDropdown />
-        <UserDropdown />
+        <UserDropdown /> */}
       </Box>
     </Box>
   )
